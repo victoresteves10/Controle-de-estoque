@@ -1,0 +1,46 @@
+{% extends 'bases/base.html' %}
+{% load static %}
+
+
+{% block 'body' %}
+
+<div class="container-fluid bg-inscricao">
+
+    <div class="row">
+        <div class="col-md">
+            <h3 class="logo">Laboratório de Telômeros</h3>
+
+            <div class="box-form">
+                <h3>LOGIN</h3>
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert {{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+                {% endif %}
+                <hr style="border-color: #7E7B7C">
+
+                <form action="{% url 'index' %}" method="POST">{% csrf_token %}
+                    <label>Usuário:</label>
+                    <input type="text" class="form-control" placeholder="Usuário..." name="username">
+                    <br>
+                    <label>Senha:</label>
+                    <input type="password" class="form-control" placeholder="Senha..." name="senha">
+
+                    <br>
+                    <br>
+                    <input type="submit" value="LOGAR" class="botao">
+                </form>
+            </div>
+
+
+
+        </div>
+
+        <div class="col-md bg-img">
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

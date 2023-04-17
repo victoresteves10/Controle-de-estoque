@@ -1,0 +1,71 @@
+{% extends 'bases/base.html' %}
+{% load static %}
+{% block 'head' %}
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+{% endblock %}
+
+{% block 'body' %}
+<div class="container">
+    <br> {% if messages %}
+    {% for message in messages %}
+    <div class="alert {{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+    {% endif %}
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-md">
+
+            <form action="{% url 'produtos'%}" method="GET">
+                <label>Pesquisar:</label>
+                <input type="text" placeholder="Nome..." class="form-control" name="nome">
+        </div>
+
+        <div class="col-md">
+            <br>
+            <input type="submit" class="btn-principal" value="filtrar">
+            </form>
+        </div>
+
+    </div>
+
+    <table class="sortable">
+        <tr>
+            <th>Número</th>
+            <th>Nome</th>
+            <th>Marca</th>
+            <th>Descrição</th>
+            <th>Validade</th>
+            <th>Armazenamento</th>
+            <th>Situação</th>
+            <th>Atualizar</th>
+
+        </tr>
+
+        {% for produto in produtos %}
+        <tr class="{% cycle 'linha' 'linha2' %}">
+            <td>{{produto.numero}}</td>
+            <td>{{produto.nome}}</td>
+            <td>{{produto.marca}}</td>
+            <td>{{produto.descricao}}</td>
+            <td>{{produto.validade}}</td>
+            <td>{{produto.armazenamento}}</td>
+            <td>{{produto.situacao}}</td>
+            <td>
+                <form method="POST" action="{% url 'atualiza' produto.id %}"><select name="atualizar"
+                        id="{{produto.id}}">
+                        <option value="Selecione">Selecione</option>
+                        <option value="Acabando" name="{{produto.id}}">Acabando</option>
+                        <option value="Acabou" name="{{produto.id}}">Acabou</option>
+                        <option value="Cheio" name="{{produto.id}}">Cheio</option>
+                    </select>{% csrf_token %} <input type="submit" id="{{produto.id}}" value="Atualizar"></form>
+            </td>
+
+        </tr>
+        {% endfor %}
+
+    </table>
+</div>
+{% endblock %}
