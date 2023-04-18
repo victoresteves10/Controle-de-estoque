@@ -10,7 +10,7 @@ from django.contrib import auth
 
 def index(request):
     if request.method == "GET":
-        return render(request, 'index2.html')
+        return render(request, 'index.html')
     elif request.method == "POST":
         username = request.POST.get('username')
         senha = request.POST.get('senha')
@@ -24,3 +24,7 @@ def index(request):
 
         auth.login(request, user)
         return redirect('produtos/')
+
+
+def admin(request):
+    return redirect('admin')
